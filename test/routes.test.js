@@ -18,8 +18,20 @@ describe('POST /first-form/', () => {
   });
   it("On submit form, should return 200 with all fields complete",(done)=>{
       chai.request(app).post('/first-form').type('form').send({
-      'username': '123',
-      'password': '123'
+      'email': '123',
+      'real_name': '123'
+      }).end((err, res) => {
+      // there should be no errors
+      should.not.exist(err);
+      // there should be a 200 status code
+      res.status.should.equal(400);
+      done();
+      });
+  });
+  it("On submit form, should return 200 with all fields complete and correct format",(done)=>{
+      chai.request(app).post('/first-form').type('form').send({
+      'email': 'tester@example.com',
+      'real_name': 'Hello'
     }).end((err, res) => {
       // there should be no errors
       should.not.exist(err);
@@ -27,5 +39,5 @@ describe('POST /first-form/', () => {
       res.status.should.equal(200);
       done();
       });
-  })
+  });
 });

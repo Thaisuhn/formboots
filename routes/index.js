@@ -1,17 +1,27 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const { check, validationResult,body } = require('express-validator/check');
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.post("/first-form",(req,res,next)=>{
-	const {username,password} = req.body;
-	if(username && password){
-		res.status(200).end();
+router.get("/first-form",(req,res,next)=>{
+  res.render('first-form');
+})
+router.post("/first-form",[
+	body('email').isEmail().normalizeEmail(),
+	body('real_name').trim().escape()
+	],(req,res,next)=>{
+	const errors = validationResult(req);
+	const {email,real_name} = req.body;
+	if(email && real_name && errors.isEmpty()){
+		res.redirect("/first-form");
+	}else{
+		res.sendStatus(400);
 	}
-	res.status(400).end();
 })
 
 module.exports = router;
