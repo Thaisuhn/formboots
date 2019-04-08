@@ -1,2 +1,9 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+{{#if results}}
+<ul class="list-group">
+	{{#each results}}
+	  <li class="list-group-item">Name:{{real_name}} Email:{{email}}</li>
+	{{/each}}
+</ul>
+{{else}}
+	<h1>Please fillout a form</h1>
+{{/if}}
